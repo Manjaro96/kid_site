@@ -5,225 +5,154 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ti'CG</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+    </head>
 
-<body class="bg-gradient-to-b from-white to-stone-100 font-sans text-stone-900 scroll-smooth">
-
+<body>
 
   <!-- NAVBAR -->
-    <nav class="bg-gradient-to-t from-[#c3985f] via-[#d8c0a0] to-[#e3d0c0] text-black  sticky top-0  backdrop-blur border-b border-stone-200 z-50">
+    <nav class="navbar">
+        <div class="navbar-inner">
+            
+            <div class="navbar-left"></div>
 
-    <div class="max-w-6xl mx-auto px-40 flex justify-between items-center py-4">
+            <div class="navbar-logo">
+                <a href="https://www.youtube.com/shorts/qeujSpc8f7k" target="_blank"><img src="images/logo.png" alt="Ti'CG logo"></a>
+            </div>
 
-        <!-- LOGO -->
-        <img src="images/logo.png" class="h-10 w-auto" alt="Ti'CG logo">
+            <div class="navbar-right">
+                
+            </div>
 
-        <div class="flex gap-5 text-xs font-medium >
-        <a href="#hero" class="hover:text-amber-700 transition">Home</a>
-        <a href="#about" class="hover:text-amber-700 transition">About</a>
-        <a href="#gallery-section" class="hover:text-amber-700 transition">Cards</a>
-        <a href="#contact" class="hover:text-amber-700 transition">Contact</a>
         </div>
-
-        <a href="https://www.youtube.com/shorts/qeujSpc8f7k" target="_blank" class="bg-[#262514] hover:from-amber-800 hover:to-yellow-700 text-white px-9 py-2 text-s rounded-md transition">
-        Shop now
-        </a>
-
-    </div>
-
     </nav>
 
 
   <!-- HERO -->
-  
-    <section id="hero" class="bg-gradient-to-b from-[#c3985f] via-[#d8c0a0] to-[#e3d0c0] min-h-[100vh] flex items-center">
-        <div class="max-w-6xl mx-auto px-6 w-full grid md:grid-cols-2 gap-12 items-center">
-       
+  <section id="hero" class="hero">
+    <div class="hero-grid container">
 
-        <div class="text-center md:text-left">
-            <h1 class="text-3xl md:text-5xl font-bold mb-6 leading-tight">
-            Collect. Trade. <br> Discover Rare Cards.
-            </h1>
+        <div class="hero-text">
+        <h1>
+            Collect. Trade.<br>
+            Discover Rare Cards.
+        </h1>
 
-            <p class="text-stone-600 mb-8 max-w-md mx-auto md:mx-0">
+        <p>
             Explore our curated collection of premium trading cards.
-            </p>
+        </p>
 
-            <a href="https://www.youtube.com/shorts/qeujSpc8f7k" target="_blank" class="bg-[#262514]  hover:from-amber-800 hover:to-yellow-700 text-[#d8c0a0] px-8 py-3 rounded-lg transition">
-            Shop Now
-            </a>
+        <a href="#" class="btn btn-dark">Shop Now</a>
+        <a href="#" class="contact-btn">Contact Us</a>
         </div>
 
-        <div class="relative flex justify-center items-start mt-10 md:mt-0">
-
-            <img src="images/card2.jpg" class="w-44 md:w-56 rounded-xl shadow-md rotate-[-3deg] relative z-20">
-            <img src="images/card1.jpg" class="w-44 md:w-56 rounded-xl shadow-sm rotate-[3deg] -ml-10 md:-ml-16 relative z-10">
-
+        <div class="hero-images">
+        <img src="images/card2.jpg" class="card-img rotate-left">
+        <img src="images/card1.jpg" class="card-img rotate-right">
         </div>
 
-        </div>
+    </div>
 
+    <!-- 👇 FORA DO GRID -->
+    <div class="discover-wrapper">
+        <a href="#about" class="discover-more">
+        Discover more
+        <span class="arrow-down">↓</span>
+        </a>
+    </div>
     </section>
 
 
   <!-- ABOUT -->
+  <section id="about" class="about">
 
-    <section id="about" class="bg-gradient-to-t from-stone-100 via-yellow-50 to-stone-100 py-16 md:py-24">
+    <div class="container about-grid">
 
-    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      <div class="about-image">
+        <img src="images/logo_with_letters.PNG">
+      </div>
+      
 
-        <!-- IMAGE (LEFT) -->
-        <div class="flex justify-center md:justify-start">
-        <img src="images/about1.png" >
+      <div class="about-text">
+        <h2>Tios' Collectors Guild</h2>
+
+        <p>
+Ti’CG is a trading card and collectibles store dedicated to providing authentic, high-quality cards for collectors of all levels. The focus is on building a carefully curated selection that includes rare finds, vintage pieces, and more accessible cards, ensuring that both experienced collectors and beginners can find something meaningful. Every card is chosen with attention to authenticity, condition, and overall value, with the goal of maintaining a trustworthy and enjoyable collecting experience.        </p>
+        <p>
+Beyond the cards themselves, Ti’CG is built around a shared passion for collecting and trading. It aims to bring together people who appreciate the history, design, and excitement behind each piece. Whether someone is looking to expand a serious collection or simply explore the hobby, the store provides a space where collectors can connect through common interests and the stories that each card carries.        </p>
+      </div>
+
+    </div>
+    <div class="discover-wrapper">
+        <a href="#gallery-section" class="discover-more">
+        Discover more
+        <span class="arrow-down">↓</span>
+        </a>
+    </div>
+    </section>
+  </section>
+
+
+  <!-- FEATURED -->
+  <section id="gallery-section" class="gallery-section">
+
+    <div class="container">
+
+      <h2 class="section-title">Featured Cards</h2>
+
+      <div class="gallery-wrapper">
+
+        <button id="btn-left" class="arrow arrow-left">‹</button>
+        <button id="btn-right" class="arrow arrow-right">›</button>
+
+        <div id="gallery" class="gallery">
+
+          <div class="card">
+            <img src="images/card1.jpg">
+            <h3>Vulpix Card</h3>
+            <p>Vintage collectible</p>
+          </div>
+
+          <div class="card">
+            <img src="images/card2.jpg">
+            <h3>Rare Collectibles</h3>
+            <p>Limited edition</p>
+          </div>
+
+          <div class="card">
+            <img src="images/card3.jpg">
+            <h3>Pikachu Card</h3>
+            <p>Highly sought after</p>
+          </div>
+
+          <div class="card">
+            <img src="images/card4.jpg">
+            <h3>magic cards</h3>
+            <p>Exclusive drop</p>
+          </div>
+
         </div>
 
-        <!-- TEXT (RIGHT) -->
-        <div class="text-center md:text-center">
-
-        <h2 class="text-3xl font-bold mb-6">About Ti'CG</h2>
-
-        <p class="text-stone-600 leading-relaxed mb-10">
-            Ti'CG is your trusted source for authentic trading cards and collectibles. We specialize in rare and vintage cards, carefully authenticating each piece to ensure quality and value. With years of experience in the collectibles market, we connect passionate collectors with the cards they've been searching for. Whether you're building your first collection or hunting for that elusive grail card, we're here to help you discover something special.
-        </p>
-
-        </div>
+      </div>
 
     </div>
 
-    </section>
-
-
-
-
- <!-- FEATURED -->
-    <section id="gallery-section" class="bg-gradient-to-r from-[#c3985f] via-[#d8c0a0] to-[#e3d0c0] py-16">
-
-    <div class="max-w-6xl mx-auto px-6">
-
-        <h2 class="text-2xl md:text-3xl font-bold text-center mt-10 mb-10">
-        Featured Cards
-        </h2>
-
-        <div class="relative group">
-
-        <!-- LEFT BUTTON (OUTSIDE) -->
-        <button 
-            onclick="document.getElementById('gallery').scrollBy({ left: -320, behavior: 'smooth' })"
-            class="absolute -left-10 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-gradient-to-b from-amber-200 via-yellow-100 to-stone-100 shadow p-3 rounded-full opacity-100 group-hover:opacity-100 transition z-10"
-        >
-            ‹
-        </button>
-
-        <!-- RIGHT BUTTON (OUTSIDE) -->
-        <button 
-            onclick="document.getElementById('gallery').scrollBy({ left: 320, behavior: 'smooth' })"
-            class="absolute -right-10 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-gradient-to-b from-amber-200 via-yellow-100 to-stone-100 shadow p-3 rounded-full opacity-100 group-hover:opacity-100 transition z-10"
-        >
-            ›
-        </button>
-
-        <!-- GALLERY -->
-        <div id="gallery" class="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar">
-
-            <!-- CARD 1 -->
-            <div class="min-w-[300px]">
-            <div class="rounded-xl overflow-hidden shadow-sm">
-                <img src="images/card1.jpg"
-                class="rounded w-full aspect-[2/3] object-cover">
-            </div>
-            <h3 class="font-bold">vulpix Card</h3>
-            <p class="text-stone-500">Vintage collectible</p>
-            </div>
-
-            <!-- CARD 2 -->
-            <div class="min-w-[300px]">
-            <div class="rounded-xl overflow-hidden shadow-sm">
-                <img src="images/card2.jpg"
-                class="rounded w-full aspect-[2/3] object-cover">
-            </div>
-            <h3 class="font-bold">Rare Collectibles</h3>
-            <p class="text-stone-500">Limited edition</p>
-            </div>
-
-            <!-- CARD 3 -->
-            <div class="min-w-[300px]">
-            <a href="https://www.youtube.com/shorts/qeujSpc8f7k" target="_blank">
-                <div class="rounded-xl overflow-hidden shadow-sm">
-                <img src="images/card1.jpg"
-                    class="rounded w-full aspect-[2/3] object-cover">
-                </div>
-                <h3 class="font-bold">Pikachu Card</h3>
-                <p class="text-stone-500">Highly sought after</p>
-            </a>
-            </div>
-
-            <!-- CARD 4 -->
-            <div class="min-w-[300px]">
-            <div class="rounded-xl overflow-hidden shadow-sm">
-                <img src="images/card2.jpg"
-                class="rounded w-full aspect-[2/3] object-cover">
-            </div>
-            <h3 class="font-bold">Rare Card #4</h3>
-            <p class="text-stone-500">Exclusive drop</p>
-            </div>
-
-            <!-- CARD 5 -->
-            <div class="min-w-[300px]">
-            <div class="rounded-xl overflow-hidden shadow-sm">
-                <img src="images/card1.jpg"
-                class="rounded w-full aspect-[2/3] object-cover">
-            </div>
-            <h3 class="font-bold">Rare Card #5</h3>
-            <p class="text-stone-500">Collector’s item</p>
-            </div>
-
-            <!-- CARD 6 -->
-            <div class="min-w-[300px]">
-            <div class="rounded-xl overflow-hidden shadow-sm">
-                <img src="images/card2.jpg"
-                class="rounded w-full aspect-[2/3] object-cover">
-            </div>
-            <h3 class="font-bold">Rare Card #6</h3>
-            <p class="text-stone-500">Ultra rare</p>
-            </div>
-
-        </div>
-
-        </div>
-
-    </div>
-
-    </section>
-
-    <!-- HIDE SCROLLBAR -->
-    <style>
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-    .no-scrollbar {
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-    }
-    </style>
+  </section>
 
 
   <!-- CTA -->
-  <section class="bg-gradient-to-r from-[#c3985f] via-[#d8c0a0] to-[#e3d0c0] text-black pt-0 pb-16">
+  <section class="cta">
 
-    <div class="max-w-4xl mx-auto px-6 text-center">
+    <div class="container">
 
-      <h2 class="text-2xl md:text-3xl font-bold mb-4">
-        Explore the Full Collection
-      </h2>
+      <h2>Explore the Full Collection</h2>
 
-      <p class="mb-6 text-black">
-        Discover hundreds of rare cards waiting for you.
-      </p>
+      <p>Discover hundreds of rare cards waiting for you.</p>
 
-      <a href="https://www.youtube.com/shorts/qeujSpc8f7k" target="_blank"" class="bg-white text-amber-800 px-8 py-3 rounded-lg font-bold">
-        Visit Store
-      </a>
+      <a href="#" class="btn btn-light">Visit Store</a>
 
     </div>
 
@@ -231,14 +160,13 @@
 
 
   <!-- CONTACT -->
-  <section id="contact" class="bg-white py-20">
+  <section id="contact" class="contact">
 
-    <div class="max-w-4xl mx-auto px-6 text-center">
+    <div class="container">
 
-      <h2 class="text-3xl font-bold mb-6">Get in Touch</h2>
-
-      <p class="text-stone-600 mb-2">contact@ticg.com</p>
-      <p class="text-stone-600">@ticg</p>
+      <h2>Get in Touch</h2>
+      <p>contact@ticg.com</p>
+      <p>@ticg</p>
 
     </div>
 
@@ -246,9 +174,12 @@
 
 
   <!-- FOOTER -->
-  <footer class="bg-stone-900 text-stone-400 py-6 text-center">
-    <p>© 2026 Ti'CG. All rights reserved.</p>
+  <footer class="footer">
+    © 2026 Ti'CG. All rights reserved.
   </footer>
+
+
+  <script src="js/script.js"></script>
 
 </body>
 </html>
