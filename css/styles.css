@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
 }
 
 body {
@@ -10,9 +11,12 @@ body {
   color: #1c1917;
   scroll-behavior: smooth;
   background: linear-gradient(to bottom, white, #f5f5f4);
+  width: 100%;
+  overflow-x: hidden;
 }
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 
@@ -45,17 +49,19 @@ html {
 }
 
 .navbar-logo img {
-  height: 80px;
+  height: 120px;
 }
 
 /* HERO */
 .hero {
-  min-height: 100vh;
+  min-height: 90vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* <-- isto faltava */
+  align-items: center; 
   background: linear-gradient(to bottom, #c3985f, #d8c0a0, #e3d0c0);
+  overflow-x: hidden;
 }
 
 .hero-grid {
@@ -75,11 +81,12 @@ html {
 .hero h1 {
   font-size: 64px;
   margin-bottom: 20px;
+  color: #2e1800;
 }
 
 .hero p {
   margin-bottom: 25px;
-  color: #57534e;
+  color: #833700;
 }
 
 /* BUTTONS */
@@ -93,7 +100,7 @@ html {
 }
 
 .btn-dark {
-  background: #262514;
+  background: #2e1800;
   color: #e3d0c0;
 }
 .contact-btn {
@@ -106,36 +113,45 @@ html {
   font-weight: 500;
 
   background: transparent;
-  border: 1px solid #262514;
-  color: #262514;
+  border: 1px solid #2e1800;
+  color: #2e1800;
 
   transition: 0.2s ease;
 }
-
+.btn-dark:hover {
+  background: #833700;
+  transform: scale(1.1)
+}
 .contact-btn:hover {
   background: rgba(38, 37, 20, 0.08);
+  transform: scale(1.1)
 }
 /* HERO IMAGES */
 .hero-images {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
 .card-img {
-  width: 220px;
+  width: min(220px, 40vw);
   border-radius: 12px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
-
+@media (max-width: 768px) {
+  .card-img {
+    display: none;
+  }
+}
 .rotate-left {
   transform: rotate(-3deg);
-  z-index: 2;
+  
 }
 
 .rotate-right {
   transform: rotate(3deg);
-  margin-left: -40px;
+
 }
 
 
@@ -171,15 +187,20 @@ html {
   margin-top: 8px;
   animation: bounce 1.5s infinite;
 }
-
+@media (max-width: 768px) {
+  .discover-more {
+    display: none;
+  }
+}
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(8px); }
 }
 /* ABOUT */
 .about {
-  padding: 100px 0;
-  height: 1000px;
+  padding: 120px 0;
+  min-height: 100vh;
+  background: #f7f5f3;
 }
 
 .about-grid {
@@ -188,6 +209,17 @@ html {
   align-items: center;
 }
 
+@media (max-width: 768px) {
+  .about{
+     padding: 0;
+  }
+}
+@media (max-width: 768px) {
+  .about-grid {
+    gap: 0px;
+    padding-bottom: 100px;
+  }
+}
 @media (min-width: 768px) {
   .about-grid {
     grid-template-columns: 1fr 1fr;
@@ -195,17 +227,19 @@ html {
 }
 
 .about-text h2 {
-  font-size: 36px;
+  font-size: 32px;
   margin-bottom: 20px;
-  color: #262514;
+  color: #2e1800;
+  text-align: left;
+  
 }
 
 .about-text p {
+  word-spacing: 3px;
   text-align: justify;
-  font-size: 16px;
-  line-height: 1.8;
-  color: #57534e;
-  margin-bottom: 16px;
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: 470;
   max-width: 500px;
 }
 
@@ -216,18 +250,21 @@ html {
 }
 /* GALLERY */
 .gallery-section {
-  padding: 80px 0;
-  background: linear-gradient(to right, #c3985f, #d8c0a0, #e3d0c0);
+  padding: 40px 0;
+  background: linear-gradient(to bottom, #c3985f, #d8c0a0, #e3d0c0)
 }
 
 .section-title {
   text-align: center;
   font-size: 28px;
   margin-bottom: 30px;
+  color: #2e1800;
 }
 
 .gallery-wrapper {
   position: relative;
+  padding: 0 40px;
+  overflow: visible;
 }
 
 .gallery {
@@ -235,9 +272,11 @@ html {
   gap: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
-
   scroll-snap-type: x mandatory;
-  padding-bottom: 10px;
+  justify-content: flex-start;
+  padding: 0 ;
+  align-items: center;
+  
 }
 
 .gallery::-webkit-scrollbar {
@@ -245,29 +284,42 @@ html {
 }
 
 .card {
-  min-width: 350px;
-  scroll-snap-align: start;
-  flex-shrink: 0;
+  flex: 0 0 auto;
+  width: clamp(220px, 80vw, 280px);
+}
+
+@media (min-width: 768px) {
+  .card {
+    width: 45%;
+  }
+}
+
+
+@media (min-width: 1024px) {
+  .card {
+    flex: 0 0 30%;
+  }
 }
 
 .card img {
   width: 100%;
-  height: 500px;
   aspect-ratio: 2 / 3;
   object-fit: cover;
   border-radius: 12px;
-  display: block;
+  
 }
 
 .card h3 {
   margin-top: 10px;
-  color:#442400;
+  color: #2e1800;
   text-align: justify;
 }
 
 .card p {
   color: #833700;
 }
+
+
 
 /* ARROWS */
 .arrow {
@@ -280,21 +332,58 @@ html {
   border-radius: 50%;
   cursor: pointer;
 }
-
+@media (max-width: 768px) {
+  .arrow {
+    display: none;
+  }
+}
 .arrow-left {
-  left: -40px;
+  left: 10px;
 }
 
 .arrow-right {
-  right: -40px;
+  right: 10px;
 }
 
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #d6d3d1;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.dot.active {
+  background: #2e1800;
+  transform: scale(1.2);
+}
 /* CTA */
 .cta {
-  padding: 60px 0;
+  
   text-align: center;
-  background: linear-gradient(to right, #c3985f, #d8c0a0, #e3d0c0);
+  background: linear-gradient(to top, #c3985f, #d8c0a0, #e3d0c0);
 }
+
+.cta .container {
+  padding-bottom: 70px;
+}
+.container h2{
+  padding-bottom: 8px;
+  color: #2e1800;
+}
+
+.container p{
+  padding-bottom: 20px;
+  color: #2e1800;
+}
+
 .btn-light {
   display: inline-block;
   padding: 12px 28px;
@@ -310,12 +399,47 @@ html {
 }
 
 .btn-light:hover {
-  background: #f5f5f4;
+  background: #fff5da;
 }
+
 /* CONTACT */
 .contact {
-  padding: 80px 0;
+  padding-top: 30px;
   text-align: center;
+}
+.contact h2{
+  padding: 40px 0;
+}
+
+.contact p{
+  word-spacing: 3px;
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 470;
+}
+.newsletter-form {
+  padding-bottom: 30px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.newsletter-form input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  min-width: 250px;
+}
+
+.newsletter-form button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #2e1800;
+  color: #fff;
+  cursor: pointer;
 }
 
 /* FOOTER */
