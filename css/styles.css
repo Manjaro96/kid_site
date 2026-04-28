@@ -10,7 +10,7 @@ html, body {
   width: 100%;
 }
 body {
-  font-family: "Fredoka", sans-serif;
+   font-family: 'Poppins', sans-serif;
   color: #1c1917;
   scroll-behavior: smooth;
   background: linear-gradient(to bottom, white, #f5f5f4);
@@ -40,7 +40,7 @@ html {
 .navbar-inner {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 12px 24px;
+  padding: 12px 10px;
 
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -52,22 +52,33 @@ html {
   justify-content: center;
 }
 
+.navbar-logo:hover{
+  transform: scale(1.1)
+}
+
 .navbar-logo img {
   height: 120px;
 }
 
 /* HERO */
 .hero {
-  min-height: 90vh;
+  min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 100px; /* opcional para dar respiro */
+  
   align-items: center; 
   background: linear-gradient(to bottom, #c3985f, #d8c0a0, #e3d0c0);
   overflow-x: clip;
 }
-
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 20px;
+    
+  }
+}
 .hero-grid {
   width: 100%;
   max-width: 1150px;
@@ -87,7 +98,11 @@ html {
   margin-bottom: 20px;
   color: #2e1800;
 }
-
+@media(max-width: 768px) {
+  .hero h1{
+    font-size: 54px;
+  }
+}
 .hero p {
   margin-bottom: 25px;
   color: #833700;
@@ -130,6 +145,7 @@ html {
   background: rgba(38, 37, 20, 0.08);
   transform: scale(1.1)
 }
+
 /* HERO IMAGES */
 .hero-images {
   display: flex;
@@ -165,8 +181,6 @@ html {
     display: none;
   }
 }
-
-
 
 .discover-wrapper {
   max-width: 1150px;
@@ -209,6 +223,7 @@ html {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(8px); }
 }
+
 /* ABOUT */
 .about {
   padding: 120px 0;
@@ -368,7 +383,7 @@ html {
 .dot {
   width: 8px;
   height: 8px;
-  background: #d6d3d1;
+  background: #f0b289;
   border-radius: 50%;
   transition: 0.3s;
 }
@@ -385,7 +400,7 @@ html {
 }
 
 .cta .container {
-  padding-bottom: 70px;
+  padding-bottom: 100px;
 }
 .container h2{
   padding-bottom: 8px;
@@ -393,7 +408,7 @@ html {
 }
 
 .container p{
-  padding-bottom: 20px;
+  padding-bottom: 40px;
   color: #2e1800;
 }
 
@@ -413,7 +428,9 @@ html {
 
 .btn-light:hover {
   background: #fff5da;
+  transform: scale(1.1);
 }
+
 
 /* CONTACT */
 .contact {
@@ -453,6 +470,10 @@ html {
   background: #2e1800;
   color: #fff;
   cursor: pointer;
+}
+.newsletter-form button:hover{
+  background: #833700;
+  transform: scale(1.1);
 }
 
 /* FOOTER */
