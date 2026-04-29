@@ -3,6 +3,8 @@ const btnLeft = document.getElementById("btn-left");
 const btnRight = document.getElementById("btn-right");
 const cards = document.querySelectorAll(".card");
 const dotsContainer = document.querySelector(".carousel-dots");
+const hamburger = document.getElementById("hamburger");
+const menu = document.querySelector(".navbar-left");
 
 let dots = [];
 
@@ -106,3 +108,8 @@ window.addEventListener("resize", () => {
 
 // init
 createDots();
+
+
+hamburger.addEventListener("click", () => {
+  menu.classList.toggle("active");
+});
