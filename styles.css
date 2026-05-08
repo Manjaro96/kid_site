@@ -347,6 +347,10 @@ h1 span {
   transform: rotate(8deg) rotateY(6deg);
 }
 
+
+
+
+
 .features-section {
   padding: 38px 0;
   background: rgba(0, 0, 0, 0.2);
@@ -533,9 +537,7 @@ h1 span {
 }
 
 .cta-section {
-  background:
-    linear-gradient(135deg, rgba(120, 53, 15, 0.4), rgba(69, 26, 3, 0.6)),
-    rgba(0, 0, 0, 0.2);
+  background:linear-gradient(135deg, rgba(28, 25, 23, 0.76), rgba(73, 32, 11, 0.86));
   border-top: 1px solid var(--line-soft);
   border-bottom: 1px solid var(--line-soft);
 }
