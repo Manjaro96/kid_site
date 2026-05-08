@@ -344,7 +344,7 @@ h1 span {
   width: 240px;
   right: -100px;
   top: 26px;
-  transform: rotate(8deg) rotateY(18deg);
+  transform: rotate(8deg) rotateY(6deg);
 }
 
 .features-section {
