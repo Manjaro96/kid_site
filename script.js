@@ -23,27 +23,27 @@ const features = [
 
 const featuredCards = [
   {
-    name: "Pokemon Card Fan",
+    name: "Late Night Pulls",
     rarity: "Card Backs",
-    description: "A spread of Pokemon card backs fanned out on a dark fabric surface.",
+    description: "A small glimpse into a growing collection full of nostalgia and late-night pulls.",
     image: "./images/1.jpg"
   },
   {
-    name: "God Card Trio",
-    rarity: "Yu-Gi-Oh!",
-    description: "The Winged Dragon of Ra, Slifer the Sky Dragon, and Obelisk displayed in cases.",
+    name: "The Big Three",
+    rarity: "God Cards",
+    description: "Some legends never lose their place in the spotlight.",
     image: "./images/2.jpg"
   },
   {
-    name: "Charizard Pair",
-    rarity: "GX Cards",
-    description: "Two sleeved Charizard cards held up against a blurred shelf of collectibles.",
+    name: "Double Charizard",
+    rarity: "Charizard",
+    description: "A favorite duo kept close for a reason.",
     image: "./images/3.jpg"
   },
   {
-    name: "Mewtwo Display",
-    rarity: "Classic Holo",
-    description: "A vintage Mewtwo card on a stand framed by action figures and toys.",
+    name: "Mewtwo Energy",
+    rarity: "Mewtwo",
+    description: "One of those cards that instantly stands out in any setup.",
     image: "./images/4.jpg"
   }
 ];
