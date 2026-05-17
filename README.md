@@ -1,34 +1,3 @@
 # Ti'CG React
 
 Migracao do site estatico para React com Vite.
-
-## Shopify storefront
-
-This project now includes a minimal headless Shopify Storefront API integration with:
-
-- server-side commerce proxy for Storefront API requests
-- internal API key enforcement between the public commerce route and the proxy
-- cursor pagination for products and collections
-- collection, rarity, availability, and price filters
-- cart persistence in `localStorage`
-- Shopify-hosted checkout redirect
-
-## Environment variables
-
-Create a `.env` file from `.env.example`:
-
-```bash
-SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
-SHOPIFY_STOREFRONT_ACCESS_TOKEN=your-storefront-token
-SHOPIFY_INTERNAL_API_KEY=replace-with-long-random-internal-key
-SHOPIFY_STOREFRONT_API_VERSION=2026-04
-SHOPIFY_RARITY_NAMESPACE=custom
-SHOPIFY_RARITY_KEY=rarity
-```
-
-Notes:
-
-- The Storefront token and internal API key stay server-side and are not hardcoded in the frontend.
-- Do not expose any Shopify Admin API credentials in this app.
-- Product and collection reads are cached in the backend only.
-- Rarity filtering works best when products use tags like `rarity:Ultra Rare` or an exposed product metafield.

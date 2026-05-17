@@ -1,53 +1,12 @@
 import { useState } from "react";
-import CartDrawer from "./components/CartDrawer";
-import CatalogFilters from "./components/CatalogFilters";
-import ProductCard from "./components/ProductCard";
 import { featuredCards, features, galleryImages, shopUrl } from "./data";
-import { useCommerce } from "./hooks/useCommerce";
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const year = new Date().getFullYear();
-  const {
-    collections,
-    products,
-    pageInfo,
-    collectionMeta,
-    filters,
-    rarityOptions,
-    cart,
-    isLoadingCatalog,
-    isLoadingMore,
-    isCartBusy,
-    catalogError,
-    cartError,
-    setFilters,
-    addToCart,
-    updateCartLine,
-    removeCartLine,
-    loadMore
-  } = useCommerce();
 
   const closeMenu = () => setIsMenuOpen(false);
   const toggleMenu = () => setIsMenuOpen((current) => !current);
-  const cartCount = cart?.totalQuantity || 0;
-
-  const handleAddToCart = async (variantId) => {
-    await addToCart(variantId);
-    setIsCartOpen(true);
-  };
-
-  const handleFilterChange = (nextFilters) => {
-    setFilters((current) => ({
-      ...current,
-      ...nextFilters
-    }));
-  };
-
-  const featuredCatalogItems = products.length
-    ? products.slice(0, 4).map((entry) => entry.card)
-    : [];
 
   return (
     <div className="site-shell">
@@ -65,10 +24,6 @@ function App() {
           </div>
 
           <div className="header-actions">
-            <button className="cart-button" type="button" onClick={() => setIsCartOpen(true)}>
-              Cart
-              <span>{cartCount}</span>
-            </button>
             <button
               className={`menu-button ${isMenuOpen ? "is-open" : ""}`}
               type="button"
@@ -201,59 +156,20 @@ function App() {
               Browse standout cards from the collection and explore different sets, rarities, and
               collector favourites.
             </p>
-            <CatalogFilters
-              collections={collections}
-              filters={filters}
-              rarityOptions={rarityOptions}
-              onChange={handleFilterChange}
-            />
-            {collectionMeta?.title ? (
-              <p className="section-copy center collection-summary">
-                Showing collection: {collectionMeta.title}
-              </p>
-            ) : null}
-            {catalogError ? <p className="catalog-error center">{catalogError}</p> : null}
             <div className="cards-grid">
-              {featuredCatalogItems.length
-                ? featuredCatalogItems.map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      isBusy={isCartBusy}
-                      onAddToCart={handleAddToCart}
-                    />
-                  ))
-                : featuredCards.map((card) => (
-                    <article className="product-card" key={card.name}>
-                      <img src={card.image} alt={card.name} />
-                      <div className="product-card-body">
-                        <h3>{card.name}</h3>
-                        <p>{card.description}</p>
-                        <p>
-                          <span className="pill">{card.rarity}</span>
-                        </p>
-                      </div>
-                    </article>
-                  ))}
+              {featuredCards.map((card) => (
+                <article className="product-card" key={card.name}>
+                  <img src={card.image} alt={card.name} />
+                  <div className="product-card-body">
+                    <h3>{card.name}</h3>
+                    <p>{card.description}</p>
+                    <p>
+                      <span className="pill">{card.rarity}</span>
+                    </p>
+                  </div>
+                </article>
+              ))}
             </div>
-            {isLoadingCatalog && featuredCatalogItems.length === 0 ? (
-              <p className="section-copy center">Loading featured cards...</p>
-            ) : null}
-            {!isLoadingCatalog && !featuredCatalogItems.length && !catalogError ? (
-              <p className="section-copy center">Showing the original featured gallery.</p>
-            ) : null}
-            {pageInfo.hasNextPage ? (
-              <div className="cta-actions">
-                <button
-                  className="button button-secondary"
-                  type="button"
-                  onClick={loadMore}
-                  disabled={isLoadingMore}
-                >
-                  {isLoadingMore ? "Loading..." : "Load More"}
-                </button>
-              </div>
-            ) : null}
           </div>
         </section>
 
@@ -266,35 +182,17 @@ function App() {
               collection.
             </p>
             <div className="gallery-grid">
-              {(collections.length ? collections : galleryImages).map((item, index) => (
-                <article
-                  className="gallery-item"
-                  key={typeof item === "string" ? item : item.id}
-                  onClick={
-                    typeof item === "string"
-                      ? undefined
-                      : () => handleFilterChange({ collectionHandle: item.handle })
-                  }
-                >
+              {galleryImages.map((image, index) => (
+                <article className="gallery-item" key={image}>
                   <img
-                    src={
-                      typeof item === "string"
-                        ? item
-                        : item.image?.url || item.previewProducts[0]?.featuredImage?.url || "/images/5.jpg"
-                    }
-                    alt={
-                      typeof item === "string"
-                        ? `Trading card gallery item ${index + 1}`
-                        : item.image?.altText || item.title
-                    }
+                    src={image}
+                    alt={`Trading card gallery item ${index + 1}`}
                     loading="lazy"
                   />
-                  {typeof item === "string" ? null : (
-                    <div className="gallery-item-copy">
-                      <h3>{item.title}</h3>
-                      <p>{item.description || "Explore more from this part of the collection."}</p>
-                    </div>
-                  )}
+                  <div className="gallery-item-copy">
+                    <h3>Collection {index + 1}</h3>
+                    <p>Explore more from this part of the collection.</p>
+                  </div>
                 </article>
               ))}
             </div>
@@ -347,17 +245,6 @@ function App() {
           <p className="footer-copy">&copy; {year} Ti&apos;CG. All rights reserved.</p>
         </div>
       </footer>
-
-      <CartDrawer
-        cart={cart}
-        isOpen={isCartOpen}
-        isBusy={isCartBusy}
-        error={cartError}
-        onClose={() => setIsCartOpen(false)}
-        onCheckout={() => cart?.checkoutUrl && window.location.assign(cart.checkoutUrl)}
-        onUpdateLine={updateCartLine}
-        onRemoveLine={removeCartLine}
-      />
     </div>
   );
 }
