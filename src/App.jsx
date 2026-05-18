@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { featuredCards, features, galleryImages, shopUrl } from "./data";
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showBackHome, setShowBackHome] = useState(false);
   const year = new Date().getFullYear();
 
   const closeMenu = () => setIsMenuOpen(false);
   const toggleMenu = () => setIsMenuOpen((current) => !current);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackHome(window.scrollY > 240);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="site-shell">
@@ -89,21 +101,27 @@ function App() {
             </div>
 
             <div className="hero-stack" aria-hidden="true">
-              <article className="hero-card hero-card-left">
-                <img
-                  src="https://images.unsplash.com/photo-1621882352098-a4986f39fd29?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
-                  alt=""
-                />
-              </article>
-              <article className="hero-card hero-card-center">
-                <img
-                  src="https://images.unsplash.com/photo-1632459251040-05b129454007?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
-                  alt=""
-                />
-              </article>
-              <article className="hero-card hero-card-right">
-                <img src="/images/2.jpg" alt="Rare trading cards in protective cases" />
-              </article>
+              <div className="hero-card-shell hero-card-left">
+                <article className="hero-card">
+                  <img
+                    src="https://images.unsplash.com/photo-1621882352098-a4986f39fd29?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
+                    alt=""
+                  />
+                </article>
+              </div>
+              <div className="hero-card-shell hero-card-center">
+                <article className="hero-card">
+                  <img
+                    src="https://images.unsplash.com/photo-1632459251040-05b129454007?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
+                    alt=""
+                  />
+                </article>
+              </div>
+              <div className="hero-card-shell hero-card-right">
+                <article className="hero-card">
+                  <img src="/images/2.jpg" alt="Rare trading cards in protective cases" />
+                </article>
+              </div>
             </div>
           </div>
         </section>
@@ -123,7 +141,7 @@ function App() {
         <section className="about-section" id="about">
           <div className="container about-layout">
             <div className="about-logo-wrap">
-              <img src="/images/logo.png" alt="Ti'CG Logo" className="about-logo" />
+              <img src="/images/card_logo.png" alt="Ti'CG Logo" className="about-logo" />
             </div>
             <div className="about-copy">
               <h2>Tios&apos; Collectors Guild</h2>
@@ -238,6 +256,22 @@ function App() {
           </div>
         </section>
       </main>
+
+      <a
+        className={`back-home-button ${showBackHome ? "is-visible" : ""}`}
+        href="#top"
+        aria-label="Back to top"
+        aria-hidden={!showBackHome}
+        tabIndex={showBackHome ? 0 : -1}
+        onClick={(event) => {
+          event.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3.4 2.9 10.7l1.2 1.5 1.4-1.1V20h5.5v-5.4h2.9V20h5.5v-8.9l1.4 1.1 1.2-1.5L12 3.4z" />
+        </svg>
+      </a>
 
       <footer className="site-footer">
         <div className="container footer-row">
