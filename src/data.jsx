@@ -1,6 +1,8 @@
 export const shopUrl =
   "https://www.ebay.com/usr/marcos.agt?_trksid=p4429486.m3561.l49544";
 
+const baseUrl = import.meta.env.BASE_URL;
+
 export const features = [
   {
     title: "Premium Design",
@@ -46,25 +48,25 @@ export const featuredCards = [
     rarity: "Card Backs",
     description:
       "A small glimpse into a growing collection full of nostalgia and late-night pulls.",
-    image: "/images/1.jpg"
+    image: `${baseUrl}images/1.jpg`
   },
   {
     name: "The Big Three",
     rarity: "God Cards",
     description: "Some legends never lose their place in the spotlight.",
-    image: "/images/2.jpg"
+    image: `${baseUrl}images/2.jpg`
   },
   {
     name: "Double Charizard",
     rarity: "Charizard",
     description: "A favorite duo kept close for a reason.",
-    image: "/images/3.jpg"
+    image: `${baseUrl}images/3.jpg`
   },
   {
     name: "Mewtwo Energy",
     rarity: "Mewtwo",
     description: "One of those cards that instantly stands out in any setup.",
-    image: "/images/4.jpg"
+    image: `${baseUrl}images/4.jpg`
   }
 ];
 

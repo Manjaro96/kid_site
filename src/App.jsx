@@ -5,6 +5,7 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showBackHome, setShowBackHome] = useState(false);
   const year = new Date().getFullYear();
+  const baseUrl = import.meta.env.BASE_URL;
 
   const closeMenu = () => setIsMenuOpen(false);
   const toggleMenu = () => setIsMenuOpen((current) => !current);
@@ -26,7 +27,7 @@ function App() {
         <div className="container header-row">
           <div className="brand-row">
             <a className="brand" href="#top" aria-label="Ti'CG home" onClick={closeMenu}>
-              <img src="/images/logo.png" alt="Ti'CG Logo" className="brand-logo" />
+              <img src={`${baseUrl}images/logo.png`} alt="Ti'CG Logo" className="brand-logo" />
             </a>
             <nav className="nav desktop-nav" aria-label="Primary">
               <a href="#about">About Us</a>
@@ -119,7 +120,10 @@ function App() {
               </div>
               <div className="hero-card-shell hero-card-right">
                 <article className="hero-card">
-                  <img src="/images/2.jpg" alt="Rare trading cards in protective cases" />
+                  <img
+                    src={`${baseUrl}images/2.jpg`}
+                    alt="Rare trading cards in protective cases"
+                  />
                 </article>
               </div>
             </div>
@@ -141,7 +145,7 @@ function App() {
         <section className="about-section" id="about">
           <div className="container about-layout">
             <div className="about-logo-wrap">
-              <img src="/images/card_logo.png" alt="Ti'CG Logo" className="about-logo" />
+              <img src={`${baseUrl}images/card_logo.png`} alt="Ti'CG Logo" className="about-logo" />
             </div>
             <div className="about-copy">
               <h2>Tios&apos; Collectors Guild</h2>
