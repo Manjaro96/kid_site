@@ -44,39 +44,148 @@ export const features = [
 
 export const featuredCards = [
   {
-    name: "Late Night Pulls",
-    rarity: "Card Backs",
-    description:
-      "A small glimpse into a growing collection full of nostalgia and late-night pulls.",
-    image: `${baseUrl}images/1.jpg`
+    name: "Charizard",
+    rarity: "Fire / Stage 2",
+    description: "One of the most iconic cards in the hobby. A must-have for any serious collector.",
+    image: `${baseUrl}images/WA/singles/charizard.jpeg`,
+    buyUrl: shopUrl
   },
   {
-    name: "The Big Three",
-    rarity: "God Cards",
-    description: "Some legends never lose their place in the spotlight.",
-    image: `${baseUrl}images/2.jpg`
+    name: "Mewtwo",
+    rarity: "Psychic / Basic",
+    description: "A fan-favourite that commands attention in any collection.",
+    image: `${baseUrl}images/WA/singles/mewtwo.jpeg`,
+    buyUrl: shopUrl
   },
   {
-    name: "Double Charizard",
-    rarity: "Charizard",
-    description: "A favorite duo kept close for a reason.",
-    image: `${baseUrl}images/3.jpg`
+    name: "Blastoise",
+    rarity: "Water / Stage 2",
+    description: "A classic starter evolution and a staple of vintage Pokémon sets.",
+    image: `${baseUrl}images/WA/singles/blastoise.jpeg`,
+    buyUrl: shopUrl
   },
   {
-    name: "Mewtwo Energy",
-    rarity: "Mewtwo",
-    description: "One of those cards that instantly stands out in any setup.",
-    image: `${baseUrl}images/4.jpg`
+    name: "Mew",
+    rarity: "Psychic / Basic",
+    description: "The mythical original — rare, beloved, and always in demand.",
+    image: `${baseUrl}images/WA/singles/mew.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Ho-Oh",
+    rarity: "Fire / Basic",
+    description: "A legendary bird that brings colour and power to any collection.",
+    image: `${baseUrl}images/WA/singles/ho-oh.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Umbreon",
+    rarity: "Dark / Stage 1",
+    description: "A sleek Eeveelution with serious collector appeal.",
+    image: `${baseUrl}images/WA/singles/umbreon.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Vaporeon",
+    rarity: "Water / Stage 1",
+    description: "A beloved Eeveelution with timeless card art.",
+    image: `${baseUrl}images/WA/singles/vaporeon.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Lapras",
+    rarity: "Water / Basic",
+    description: "A gentle giant with an enduring place in Pokémon history.",
+    image: `${baseUrl}images/WA/singles/lapras.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Dragonair",
+    rarity: "Dragon / Stage 1",
+    description: "Elegant and rare — a mid-evolution that holds its own.",
+    image: `${baseUrl}images/WA/singles/dragonair.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Salamence",
+    rarity: "Dragon / Stage 2",
+    description: "A powerhouse dragon with impressive artwork and collector value.",
+    image: `${baseUrl}images/WA/singles/salmance.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Kyurem",
+    rarity: "Dragon / Basic",
+    description: "The boundary Pokémon — an imposing presence in any deck or collection.",
+    image: `${baseUrl}images/WA/singles/kyurem.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Mimikyu",
+    rarity: "Fairy / Basic",
+    description: "The beloved disguise Pokémon with a dedicated fanbase.",
+    image: `${baseUrl}images/WA/singles/mimikyu.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Arceus (JP)",
+    rarity: "Normal / Basic",
+    description: "The god Pokémon in a rare Japanese print — a standout piece.",
+    image: `${baseUrl}images/WA/singles/arceus%20jp.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Blue-Eyes White Dragon",
+    rarity: "Yu-Gi-Oh! / Dragon",
+    description: "The legendary Kaiba card — a prize piece for any TCG collector.",
+    image: `${baseUrl}images/WA/singles/blue_eyes_white_dragon.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Wartortle",
+    rarity: "Water / Stage 1",
+    description: "A mid-stage classic from the original Base Set era.",
+    image: `${baseUrl}images/WA/singles/wartotle.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Magikarp",
+    rarity: "Water / Basic",
+    description: "The ultimate underdog card — iconic in its own right.",
+    image: `${baseUrl}images/WA/singles/magikarp.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Lotad",
+    rarity: "Water / Basic",
+    description: "A quirky fan favourite with clean, charming artwork.",
+    image: `${baseUrl}images/WA/singles/lotad.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Wooper",
+    rarity: "Water / Basic",
+    description: "A simple but loveable card that appeals to all collectors.",
+    image: `${baseUrl}images/WA/singles/oopa.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Trainer Card",
+    rarity: "Trainer / Item",
+    description: "A classic Trainer card in excellent condition.",
+    image: `${baseUrl}images/WA/singles/trainer.jpeg`,
+    buyUrl: shopUrl
+  },
+  {
+    name: "Orepon",
+    rarity: "Fairy / Basic",
+    description: "A charming addition to any growing collection.",
+    image: `${baseUrl}images/WA/singles/orepon.jpeg`,
+    buyUrl: shopUrl
   }
 ];
 
-export const galleryImages = [
-  "https://images.unsplash.com/photo-1632459250885-76cc46ca1dcd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-  "https://images.unsplash.com/photo-1587565221090-7b8497f86d9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-  "https://images.unsplash.com/photo-1609200660087-e23d23d7e958?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-  "https://images.unsplash.com/photo-1732944710507-feecdfb4f2c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-  "https://images.unsplash.com/photo-1674106890436-368ce68342f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-  "https://images.unsplash.com/photo-1620336655071-6b2ea4272b15?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-  "https://images.unsplash.com/photo-1640271204756-6bf55641d9fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-  "https://images.unsplash.com/photo-1599873265732-4511510f0908?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
-];
+export const galleryImages = Array.from(
+  { length: 56 },
+  (_, i) => `${baseUrl}images/WA/catologos/catalogo${i + 1}.jpeg`
+);

@@ -1,11 +1,29 @@
 import { useEffect, useState } from "react";
 import { featuredCards, features, galleryImages, shopUrl } from "./data";
 
+const CARDS_PER_PAGE = 4;
+const GALLERY_PER_PAGE = 8;
+
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showBackHome, setShowBackHome] = useState(false);
+  const [cardsPage, setCardsPage] = useState(0);
+  const [galleryPage, setGalleryPage] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
   const year = new Date().getFullYear();
   const baseUrl = import.meta.env.BASE_URL;
+
+  const totalCardsPages = Math.ceil(featuredCards.length / CARDS_PER_PAGE);
+  const visibleCards = featuredCards.slice(
+    cardsPage * CARDS_PER_PAGE,
+    (cardsPage + 1) * CARDS_PER_PAGE
+  );
+
+  const totalGalleryPages = Math.ceil(galleryImages.length / GALLERY_PER_PAGE);
+  const visibleGallery = galleryImages.slice(
+    galleryPage * GALLERY_PER_PAGE,
+    (galleryPage + 1) * GALLERY_PER_PAGE
+  );
 
   const closeMenu = () => setIsMenuOpen(false);
   const toggleMenu = () => setIsMenuOpen((current) => !current);
@@ -17,9 +35,19 @@ function App() {
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const handleKey = (e) => {
+      if (e.key === "Escape") setLightboxIndex(null);
+      if (e.key === "ArrowLeft") setLightboxIndex((i) => Math.max(0, i - 1));
+      if (e.key === "ArrowRight") setLightboxIndex((i) => Math.min(galleryImages.length - 1, i + 1));
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [lightboxIndex]);
 
   return (
     <div className="site-shell">
@@ -104,26 +132,17 @@ function App() {
             <div className="hero-stack" aria-hidden="true">
               <div className="hero-card-shell hero-card-left">
                 <article className="hero-card">
-                  <img
-                    src="https://images.unsplash.com/photo-1621882352098-a4986f39fd29?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
-                    alt=""
-                  />
+                  <img src={`${baseUrl}images/WA/singles/mew.jpeg`} alt="Mew" />
                 </article>
               </div>
               <div className="hero-card-shell hero-card-center">
                 <article className="hero-card">
-                  <img
-                    src="https://images.unsplash.com/photo-1632459251040-05b129454007?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
-                    alt=""
-                  />
+                  <img src={`${baseUrl}images/WA/singles/charizard.jpeg`} alt="Charizard" />
                 </article>
               </div>
               <div className="hero-card-shell hero-card-right">
                 <article className="hero-card">
-                  <img
-                    src={`${baseUrl}images/2.jpg`}
-                    alt="Rare trading cards in protective cases"
-                  />
+                  <img src={`${baseUrl}images/WA/singles/mewtwo.jpeg`} alt="Mewtwo" />
                 </article>
               </div>
             </div>
@@ -179,44 +198,126 @@ function App() {
               collector favourites.
             </p>
             <div className="cards-grid">
-              {featuredCards.map((card) => (
+              {visibleCards.map((card) => (
                 <article className="product-card" key={card.name}>
                   <img src={card.image} alt={card.name} />
                   <div className="product-card-body">
                     <h3>{card.name}</h3>
                     <p>{card.description}</p>
-                    <p>
+                    <div className="product-card-footer">
                       <span className="pill">{card.rarity}</span>
-                    </p>
+                      <a
+                        className="buy-button"
+                        href={card.buyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Comprar
+                      </a>
+                    </div>
                   </div>
                 </article>
               ))}
+            </div>
+
+            <div className="gallery-pagination" role="navigation" aria-label="Cards pages">
+              <button
+                className="page-btn page-btn-arrow"
+                onClick={() => setCardsPage((p) => Math.max(0, p - 1))}
+                disabled={cardsPage === 0}
+                aria-label="Previous page"
+              >
+                &#8592;
+              </button>
+
+              {Array.from({ length: totalCardsPages }, (_, i) => (
+                <button
+                  key={i}
+                  className={`page-btn ${cardsPage === i ? "active" : ""}`}
+                  onClick={() => setCardsPage(i)}
+                  aria-label={`Page ${i + 1}`}
+                  aria-current={cardsPage === i ? "page" : undefined}
+                >
+                  {i + 1}
+                </button>
+              ))}
+
+              <button
+                className="page-btn page-btn-arrow"
+                onClick={() => setCardsPage((p) => Math.min(totalCardsPages - 1, p + 1))}
+                disabled={cardsPage === totalCardsPages - 1}
+                aria-label="Next page"
+              >
+                &#8594;
+              </button>
             </div>
           </div>
         </section>
 
         <section className="gallery-section" id="shop">
           <div className="container">
-            <p className="eyebrow center">Sets & Collections</p>
+            <p className="eyebrow center">Sets &amp; Collections</p>
             <h2 className="section-title center">Browse across sets and eras</h2>
             <p className="section-copy center">
               Take a closer look at different sets, styles, and favourites across the wider
               collection.
             </p>
             <div className="gallery-grid">
-              {galleryImages.map((image, index) => (
-                <article className="gallery-item" key={image}>
-                  <img
-                    src={image}
-                    alt={`Trading card gallery item ${index + 1}`}
-                    loading="lazy"
-                  />
-                  <div className="gallery-item-copy">
-                    <h3>Collection {index + 1}</h3>
-                    <p>Explore more from this part of the collection.</p>
-                  </div>
-                </article>
+              {visibleGallery.map((image, index) => {
+                const globalIndex = galleryPage * GALLERY_PER_PAGE + index;
+                return (
+                  <article
+                    className="gallery-item gallery-item-clickable"
+                    key={image}
+                    onClick={() => setLightboxIndex(globalIndex)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Open image ${globalIndex + 1}`}
+                    onKeyDown={(e) => e.key === "Enter" && setLightboxIndex(globalIndex)}
+                  >
+                    <img
+                      src={image}
+                      alt={`Catalogue page ${globalIndex + 1}`}
+                      loading="lazy"
+                    />
+                    <div className="gallery-zoom-hint" aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0zm0 0v2m0-4v2m-2-2h2m-4 0h2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            <div className="gallery-pagination" role="navigation" aria-label="Gallery pages">
+              <button
+                className="page-btn page-btn-arrow"
+                onClick={() => setGalleryPage((p) => Math.max(0, p - 1))}
+                disabled={galleryPage === 0}
+                aria-label="Previous page"
+              >
+                &#8592;
+              </button>
+
+              {Array.from({ length: totalGalleryPages }, (_, i) => (
+                <button
+                  key={i}
+                  className={`page-btn ${galleryPage === i ? "active" : ""}`}
+                  onClick={() => setGalleryPage(i)}
+                  aria-label={`Page ${i + 1}`}
+                  aria-current={galleryPage === i ? "page" : undefined}
+                >
+                  {i + 1}
+                </button>
               ))}
+
+              <button
+                className="page-btn page-btn-arrow"
+                onClick={() => setGalleryPage((p) => Math.min(totalGalleryPages - 1, p + 1))}
+                disabled={galleryPage === totalGalleryPages - 1}
+                aria-label="Next page"
+              >
+                &#8594;
+              </button>
             </div>
           </div>
         </section>
@@ -260,6 +361,51 @@ function App() {
           </div>
         </section>
       </main>
+
+      {lightboxIndex !== null && (
+        <div
+          className="lightbox-overlay"
+          onClick={() => setLightboxIndex(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image viewer"
+        >
+          <button
+            className="lightbox-close"
+            onClick={() => setLightboxIndex(null)}
+            aria-label="Close"
+          >
+            &#x2715;
+          </button>
+
+          <button
+            className="lightbox-nav lightbox-prev"
+            onClick={(e) => { e.stopPropagation(); setLightboxIndex((i) => Math.max(0, i - 1)); }}
+            disabled={lightboxIndex === 0}
+            aria-label="Previous image"
+          >
+            &#8592;
+          </button>
+
+          <div className="lightbox-img-wrap" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={galleryImages[lightboxIndex]}
+              alt={`Catalogue image ${lightboxIndex + 1}`}
+            />
+          </div>
+
+          <button
+            className="lightbox-nav lightbox-next"
+            onClick={(e) => { e.stopPropagation(); setLightboxIndex((i) => Math.min(galleryImages.length - 1, i + 1)); }}
+            disabled={lightboxIndex === galleryImages.length - 1}
+            aria-label="Next image"
+          >
+            &#8594;
+          </button>
+
+          <p className="lightbox-counter">{lightboxIndex + 1} / {galleryImages.length}</p>
+        </div>
+      )}
 
       <a
         className={`back-home-button ${showBackHome ? "is-visible" : ""}`}
