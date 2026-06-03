@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { featuredCards, features, galleryImages, shopUrl } from "./data";
+import { cardCategories, features, galleryImages, shopUrl } from "./data";
 
 const CARDS_PER_PAGE = 4;
 const GALLERY_PER_PAGE = 8;
@@ -7,6 +7,7 @@ const GALLERY_PER_PAGE = 8;
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showBackHome, setShowBackHome] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("singles");
   const [cardsPage, setCardsPage] = useState(0);
   const [galleryPage, setGalleryPage] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState(null);
@@ -14,11 +15,17 @@ function App() {
   const year = new Date().getFullYear();
   const baseUrl = import.meta.env.BASE_URL;
 
-  const totalCardsPages = Math.ceil(featuredCards.length / CARDS_PER_PAGE);
-  const visibleCards = featuredCards.slice(
+  const currentCategory = cardCategories.find((c) => c.id === activeCategory);
+  const totalCardsPages = Math.ceil(currentCategory.cards.length / CARDS_PER_PAGE);
+  const visibleCards = currentCategory.cards.slice(
     cardsPage * CARDS_PER_PAGE,
     (cardsPage + 1) * CARDS_PER_PAGE
   );
+
+  const handleCategoryChange = (id) => {
+    setActiveCategory(id);
+    setCardsPage(0);
+  };
 
   const totalGalleryPages = Math.ceil(galleryImages.length / GALLERY_PER_PAGE);
   const visibleGallery = galleryImages.slice(
@@ -205,6 +212,20 @@ function App() {
               Browse standout cards from the collection and explore different sets, rarities, and
               collector favourites.
             </p>
+            <div className="category-tabs" role="tablist">
+              {cardCategories.map((cat) => (
+                <button
+                  key={cat.id}
+                  role="tab"
+                  aria-selected={activeCategory === cat.id}
+                  className={`category-tab ${activeCategory === cat.id ? "active" : ""}`}
+                  onClick={() => handleCategoryChange(cat.id)}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+
             <div className="cards-grid">
               {visibleCards.map((card) => (
                 <article
@@ -234,7 +255,7 @@ function App() {
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        Comprar
+                        Visit
                       </a>
                     </div>
                   </div>
@@ -414,7 +435,7 @@ function App() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Comprar
+                Visit
               </a>
             </div>
           </div>

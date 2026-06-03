@@ -1335,3 +1335,50 @@ h1 span {
   opacity: 1;
   transform: scale(1);
 }
+
+/* Category tabs */
+.category-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.category-tab {
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease, transform 180ms ease;
+  white-space: nowrap;
+}
+
+.category-tab:hover {
+  border-color: var(--line-strong);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.category-tab.active {
+  background: linear-gradient(90deg, var(--amber-600), var(--amber-700));
+  border-color: transparent;
+  color: var(--white);
+  box-shadow: var(--cta-shadow);
+}
+
+@media (max-width: 520px) {
+  .category-tabs {
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .category-tab {
+    padding: 8px 16px;
+    font-size: 0.82rem;
+  }
+}

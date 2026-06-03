@@ -42,7 +42,10 @@ export const features = [
   }
 ];
 
-export const featuredCards = [
+const wa = (f) =>
+  `${baseUrl}images/WA/${f.replace(/ /g, "%20").replace(/\(/g, "%28").replace(/\)/g, "%29")}`;
+
+const singles = [
   {
     name: "Charizard",
     rarity: "Fire / Stage 2",
@@ -183,6 +186,106 @@ export const featuredCards = [
     image: `${baseUrl}images/WA/singles/orepon.jpeg`,
     buyUrl: shopUrl
   }
+];
+
+const sealed = [
+  {
+    name: "Moonforce Zero",
+    rarity: "Sealed / JP",
+    description: "Japanese Pokémon MEGA booster pack in mint condition.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.12.18.jpeg"),
+    buyUrl: shopUrl
+  },
+  {
+    name: "Ninja Spinner",
+    rarity: "Sealed / JP",
+    description: "Japanese Pokémon MEGA booster pack — sought-after JP exclusive.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.12.19.jpeg"),
+    buyUrl: shopUrl
+  },
+  {
+    name: "Start Deck 100",
+    rarity: "Sealed / JP",
+    description: "Japanese Pokémon Start Deck 100 — complete battle collection set.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.12.19 (2).jpeg"),
+    buyUrl: shopUrl
+  },
+  {
+    name: "Mega Brave",
+    rarity: "Sealed / JP",
+    description: "Japanese Pokémon MEGA Brave booster pack in excellent condition.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.12.19 (3).jpeg"),
+    buyUrl: shopUrl
+  },
+  {
+    name: "Ruler of the Black Flame",
+    rarity: "Sealed / JP",
+    description: "Japanese Pokémon booster pack — Charizard-featured fan favourite.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.12.19 (4).jpeg"),
+    buyUrl: shopUrl
+  }
+];
+
+const mystery = [
+  {
+    name: "Mistery Pack",
+    rarity: "Mystery / Random",
+    description: "Hand-picked surprise envelope with random cards selected by Ti'CG.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.12.19 (5).jpeg"),
+    buyUrl: shopUrl
+  },
+  {
+    name: "God Mistery Pack",
+    rarity: "Mystery / Premium",
+    description: "Premium surprise pack — rarer picks, higher value, full mystery.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.12.19 (6).jpeg"),
+    buyUrl: shopUrl
+  }
+];
+
+const personalizados = [
+  {
+    name: "Ti'CG Display Stand",
+    rarity: "Custom / Ti'CG",
+    description: "Custom-made branded display stand for booster packs — fits any standard pack.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.12.19 (1).jpeg"),
+    buyUrl: shopUrl
+  },
+  {
+    name: "Ditto & Pikachu XL Mousepad",
+    rarity: "Custom / Mousepad",
+    description: "Extra-large Pokémon-themed mousepad — Ditto and Pikachu artwork.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.13.11 (1).jpeg"),
+    buyUrl: shopUrl
+  },
+  {
+    name: "Gengar XL Mousepad",
+    rarity: "Custom / Mousepad",
+    description: "Extra-large Gengar artwork mousepad — dark and bold design.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.13.11 (2).jpeg"),
+    buyUrl: shopUrl
+  },
+  {
+    name: "LED Slab Display Case",
+    rarity: "Custom / Display",
+    description: "RGB LED-lit display case for graded slabs — available with or without card.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.14.31.jpeg"),
+    buyUrl: shopUrl
+  },
+  {
+    name: "LED Acrylic Slab Stand",
+    rarity: "Custom / Display",
+    description: "Illuminated acrylic display stand with wood base — holds 3 graded slabs side by side.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.14.31 (1).jpeg"),
+    buyUrl: shopUrl
+  }
+];
+
+export const cardCategories = [
+  { id: "singles",        label: "Singles",       cards: singles       },
+  { id: "sealed",         label: "Sealed",         cards: sealed        },
+  { id: "mystery",        label: "Mystery Packs",  cards: mystery       },
+  { id: "personalizados", label: "Custom Items", cards: personalizados }
 ];
 
 export const galleryImages = Array.from(
