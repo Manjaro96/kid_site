@@ -10,6 +10,7 @@ function App() {
   const [cardsPage, setCardsPage] = useState(0);
   const [galleryPage, setGalleryPage] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState(null);
+  const [cardModal, setCardModal] = useState(null);
   const year = new Date().getFullYear();
   const baseUrl = import.meta.env.BASE_URL;
 
@@ -48,6 +49,13 @@ function App() {
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
   }, [lightboxIndex]);
+
+  useEffect(() => {
+    if (cardModal === null) return;
+    const handleKey = (e) => { if (e.key === "Escape") setCardModal(null); };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [cardModal]);
 
   return (
     <div className="site-shell">
@@ -199,8 +207,21 @@ function App() {
             </p>
             <div className="cards-grid">
               {visibleCards.map((card) => (
-                <article className="product-card" key={card.name}>
-                  <img src={card.image} alt={card.name} />
+                <article
+                  className="product-card product-card-clickable"
+                  key={card.name}
+                  onClick={() => setCardModal(card)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View ${card.name}`}
+                  onKeyDown={(e) => e.key === "Enter" && setCardModal(card)}
+                >
+                  <div className="product-card-img-wrap">
+                    <img src={card.image} alt={card.name} />
+                    <div className="gallery-zoom-hint" aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0zm0 0v2m0-4v2m-2-2h2m-4 0h2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
+                    </div>
+                  </div>
                   <div className="product-card-body">
                     <h3>{card.name}</h3>
                     <p>{card.description}</p>
@@ -211,6 +232,7 @@ function App() {
                         href={card.buyUrl}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         Comprar
                       </a>
@@ -361,6 +383,43 @@ function App() {
           </div>
         </section>
       </main>
+
+      {cardModal !== null && (
+        <div
+          className="lightbox-overlay card-modal-overlay"
+          onClick={() => setCardModal(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={cardModal.name}
+        >
+          <button
+            className="lightbox-close"
+            onClick={() => setCardModal(null)}
+            aria-label="Close"
+          >
+            &#x2715;
+          </button>
+
+          <div className="card-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="card-modal-img-wrap">
+              <img src={cardModal.image} alt={cardModal.name} />
+            </div>
+            <div className="card-modal-body">
+              <p className="eyebrow">{cardModal.rarity}</p>
+              <h2 className="card-modal-title">{cardModal.name}</h2>
+              <p className="card-modal-desc">{cardModal.description}</p>
+              <a
+                className="button button-primary card-modal-buy"
+                href={cardModal.buyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Comprar
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
 
       {lightboxIndex !== null && (
         <div
