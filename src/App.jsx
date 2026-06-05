@@ -64,6 +64,60 @@ function App() {
     return () => window.removeEventListener("keydown", handleKey);
   }, [cardModal]);
 
+  useEffect(() => {
+    if (cardModal !== null || lightboxIndex !== null) return;
+
+    const sections = Array.from(document.querySelectorAll("main > section:not(.about-section)"));
+    let locked = false;
+    let touchStartY = 0;
+
+    const currentIndex = () => {
+      const top = window.scrollY + 80;
+      let best = 0;
+      sections.forEach((s, i) => { if (s.offsetTop <= top) best = i; });
+      return best;
+    };
+
+    const goTo = (idx) => {
+      locked = true;
+      sections[idx].scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => { locked = false; }, 500);
+    };
+
+    const onWheel = (e) => {
+      e.preventDefault();
+      if (locked) return;
+      const cur = currentIndex();
+      const next = Math.max(0, Math.min(sections.length - 1, cur + (e.deltaY > 0 ? 1 : -1)));
+      if (next === cur) return;
+      goTo(next);
+    };
+
+    const onTouchStart = (e) => { touchStartY = e.touches[0].clientY; };
+
+    const onTouchEnd = (e) => {
+      if (locked) return;
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(dy) < 40) return;
+      const cur = currentIndex();
+      const next = Math.max(0, Math.min(sections.length - 1, cur + (dy > 0 ? 1 : -1)));
+      if (next === cur) return;
+      goTo(next);
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [cardModal, lightboxIndex]);
+
+
+
   return (
     <div className="site-shell">
       <header className="site-header">
@@ -184,21 +238,15 @@ function App() {
             <div className="about-copy">
               <h2>Tios&apos; Collectors Guild</h2>
               <p className="about-text">
-                Ti&apos;CG is a trading card and collectibles store dedicated to providing
-                authentic, high-quality cards for collectors of all levels. The focus is on
-                building a carefully curated selection that includes rare finds, vintage pieces,
-                and more accessible cards, ensuring that both experienced collectors and beginners
-                can find something meaningful. Every card is chosen with attention to authenticity,
-                condition, and overall value, with the goal of maintaining a trustworthy and
-                enjoyable collecting experience.
+                Ti&apos;CG is a trading card and collectibles store dedicated to authentic,
+                high-quality cards for collectors of all levels — from rare vintage finds to
+                more accessible picks. Every card is chosen with attention to condition and value,
+                built around a shared passion for collecting and trading.
               </p>
               <p className="about-text">
-                Beyond the cards themselves, Ti&apos;CG is built around a shared passion for
-                collecting and trading. It aims to bring together people who appreciate the
-                history, design, and excitement behind each card. Whether someone is looking to
-                expand a serious collection or simply explore the hobby, the store provides a
-                space where collectors can connect through their common interests and stories each
-                guild member carries.
+                Beyond individual cards, Ti&apos;CG offers sealed products, mystery packs, and
+                custom-made display pieces crafted in-house. Whether you&apos;re building a serious
+                collection or just starting out, there&apos;s something here for every collector.
               </p>
             </div>
           </div>
@@ -206,12 +254,7 @@ function App() {
 
         <section className="cards-section" id="collections">
           <div className="container">
-            <p className="eyebrow center">Featured Cards</p>
-            <h2 className="section-title center">Highlights from the vault</h2>
-            <p className="section-copy center">
-              Browse standout cards from the collection and explore different sets, rarities, and
-              collector favourites.
-            </p>
+            <h2 className="section-title center">Featured Cards</h2>
             <div className="category-tabs" role="tablist">
               {cardCategories.map((cat) => (
                 <button
@@ -299,12 +342,7 @@ function App() {
 
         <section className="gallery-section" id="shop">
           <div className="container">
-            <p className="eyebrow center">Sets &amp; Collections</p>
-            <h2 className="section-title center">Browse across sets and eras</h2>
-            <p className="section-copy center">
-              Take a closer look at different sets, styles, and favourites across the wider
-              collection.
-            </p>
+            <h2 className="section-title center">Sets &amp; Collections</h2>
             <div className="gallery-grid">
               {visibleGallery.map((image, index) => {
                 const globalIndex = galleryPage * GALLERY_PER_PAGE + index;
@@ -365,43 +403,63 @@ function App() {
           </div>
         </section>
 
-        <section className="cta-section">
-          <div className="container narrow">
-            <p className="eyebrow center">Full Collection</p>
-            <h2 className="section-title center">Explore the complete catalogue</h2>
-            <p className="section-copy center">
-              Continue browsing cards and explore the full range in our eBay store.
-            </p>
-            <div className="cta-actions">
-              <a className="button button-primary" href={shopUrl} target="_blank" rel="noreferrer">
-                ebay store
-              </a>
-            </div>
-          </div>
-        </section>
-
         <section className="contact-section" id="contact">
-          <div className="container narrow">
-            <p className="eyebrow center">Contact</p>
-            <h2 className="section-title center">Get in touch</h2>
-            <div className="contact-links">
-              <a href="mailto:tio.cgc@gmail.com" aria-label="Gmail">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M3 6.75A1.75 1.75 0 0 1 4.75 5h14.5A1.75 1.75 0 0 1 21 6.75v10.5A1.75 1.75 0 0 1 19.25 19H4.75A1.75 1.75 0 0 1 3 17.25V6.75zm1.8-.25L12 11.72 19.2 6.5H4.8zm14.7 11V8.15l-6.98 5.05a.9.9 0 0 1-1.04 0L4.5 8.15v9.35h15z" />
-                </svg>
-              </a>
-              <a
-                href="https://www.instagram.com/tio.ccg/"
-                aria-label="Instagram"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M7.25 3h9.5A4.25 4.25 0 0 1 21 7.25v9.5A4.25 4.25 0 0 1 16.75 21h-9.5A4.25 4.25 0 0 1 3 16.75v-9.5A4.25 4.25 0 0 1 7.25 3zm0 1.5A2.75 2.75 0 0 0 4.5 7.25v9.5A2.75 2.75 0 0 0 7.25 19.5h9.5a2.75 2.75 0 0 0 2.75-2.75v-9.5A2.75 2.75 0 0 0 16.75 4.5h-9.5zm10.12 1.12a1.13 1.13 0 1 1 0 2.26a1.13 1.13 0 0 1 0-2.26zM12 7a5 5 0 1 1 0 10a5 5 0 0 1 0-10zm0 1.5A3.5 3.5 0 1 0 12 15.5A3.5 3.5 0 0 0 12 8.5z" />
-                </svg>
-              </a>
+          <div className="container contact-combined">
+            <div className="combined-cta">
+              <div className="combined-cta-copy">
+                <h2 className="section-title">Full Collection</h2>
+                <p className="combined-cta-text">
+                  The full catalogue lives on our eBay store — singles, sealed packs, mystery
+                  envelopes and custom display pieces, all in one place. Every item is carefully
+                  selected and listed with accurate condition info.
+                </p>
+                <p className="combined-cta-text">
+                  New additions drop regularly. Find us across multiple platforms and check back
+                  often for fresh finds and limited pieces straight from the vault.
+                </p>
+                <div className="store-buttons">
+                  <a className="store-btn" href={shopUrl} target="_blank" rel="noreferrer">eBay</a>
+                  <a className="store-btn" href={shopUrl} target="_blank" rel="noreferrer">OLX</a>
+                  <a className="store-btn" href={shopUrl} target="_blank" rel="noreferrer">Vinted</a>
+                  <a className="store-btn" href={shopUrl} target="_blank" rel="noreferrer">Wallapop</a>
+                </div>
+              </div>
+              <div className="combined-cta-img">
+                <img src={`${baseUrl}images/WA/WhatsApp%20Image%202026-06-03%20at%2009.47.17.jpeg`} alt="Ti'CG collection shelf" />
+              </div>
             </div>
+
+            <div className="combined-divider" aria-hidden="true" />
+
+            <div className="combined-contact">
+              <h2 className="section-title center">Get in touch</h2>
+              <div className="contact-links">
+                <a href="mailto:tio.cgc@gmail.com" className="contact-link-item">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A1.75 1.75 0 0 1 4.75 5h14.5A1.75 1.75 0 0 1 21 6.75v10.5A1.75 1.75 0 0 1 19.25 19H4.75A1.75 1.75 0 0 1 3 17.25V6.75zm1.8-.25L12 11.72 19.2 6.5H4.8zm14.7 11V8.15l-6.98 5.05a.9.9 0 0 1-1.04 0L4.5 8.15v9.35h15z" /></svg>
+                  <span>Gmail</span>
+                </a>
+                <a href="https://www.instagram.com/tio.ccg/" className="contact-link-item" target="_blank" rel="noreferrer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.25 3h9.5A4.25 4.25 0 0 1 21 7.25v9.5A4.25 4.25 0 0 1 16.75 21h-9.5A4.25 4.25 0 0 1 3 16.75v-9.5A4.25 4.25 0 0 1 7.25 3zm0 1.5A2.75 2.75 0 0 0 4.5 7.25v9.5A2.75 2.75 0 0 0 7.25 19.5h9.5a2.75 2.75 0 0 0 2.75-2.75v-9.5A2.75 2.75 0 0 0 16.75 4.5h-9.5zm10.12 1.12a1.13 1.13 0 1 1 0 2.26a1.13 1.13 0 0 1 0-2.26zM12 7a5 5 0 1 1 0 10a5 5 0 0 1 0-10zm0 1.5A3.5 3.5 0 1 0 12 15.5A3.5 3.5 0 0 0 12 8.5z" /></svg>
+                  <span>Instagram</span>
+                </a>
+                <a href={shopUrl} className="contact-link-item" target="_blank" rel="noreferrer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12c0-5.522-4.478-10-10-10S2 6.478 2 12c0 4.991 3.657 9.128 8.438 9.878V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+                  <span>Facebook</span>
+                </a>
+                <a href={shopUrl} className="contact-link-item" target="_blank" rel="noreferrer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+                  <span>X / Twitter</span>
+                </a>
+              </div>
+            </div>
+
           </div>
+          <footer className="site-footer contact-footer">
+            <div className="container footer-row">
+              <p className="footer-brand">Ti&apos;CG</p>
+              <p className="footer-copy">&copy; {year} Ti&apos;CG. All rights reserved.</p>
+            </div>
+          </footer>
         </section>
       </main>
 
@@ -503,12 +561,6 @@ function App() {
         </svg>
       </a>
 
-      <footer className="site-footer">
-        <div className="container footer-row">
-          <p className="footer-brand">Ti&apos;CG</p>
-          <p className="footer-copy">&copy; {year} Ti&apos;CG. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }
