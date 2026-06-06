@@ -201,28 +201,32 @@ const sealed = [
     rarity: "Sealed / JP",
     description: "Japanese Pokémon MEGA booster pack — sought-after JP exclusive.",
     image: wa("WhatsApp Image 2026-06-03 at 17.12.19.jpeg"),
-    buyUrl: shopUrl
+    buyUrl: shopUrl,
+    imgClass: "img-pos-bottom"
   },
   {
     name: "Start Deck 100",
     rarity: "Sealed / JP",
     description: "Japanese Pokémon Start Deck 100 — complete battle collection set.",
     image: wa("WhatsApp Image 2026-06-03 at 17.12.19 (2).jpeg"),
-    buyUrl: shopUrl
+    buyUrl: shopUrl,
+    imgClass: "img-pos-bottom"
   },
   {
     name: "Mega Brave",
     rarity: "Sealed / JP",
     description: "Japanese Pokémon MEGA Brave booster pack in excellent condition.",
     image: wa("WhatsApp Image 2026-06-03 at 17.12.19 (3).jpeg"),
-    buyUrl: shopUrl
+    buyUrl: shopUrl,
+    imgClass: "img-pos-bottom"
   },
   {
     name: "Ruler of the Black Flame",
     rarity: "Sealed / JP",
     description: "Japanese Pokémon booster pack — Charizard-featured fan favourite.",
     image: wa("WhatsApp Image 2026-06-03 at 17.12.19 (4).jpeg"),
-    buyUrl: shopUrl
+    buyUrl: shopUrl,
+    imgClass: "img-pos-bottom"
   }
 ];
 
@@ -239,18 +243,12 @@ const mystery = [
     rarity: "Mystery / Premium",
     description: "Premium surprise pack — rarer picks, higher value, full mystery.",
     image: wa("WhatsApp Image 2026-06-03 at 17.12.19 (6).jpeg"),
-    buyUrl: shopUrl
+    buyUrl: shopUrl,
+    imgClass: "img-pos-bottom"
   }
 ];
 
 const personalizados = [
-  {
-    name: "Ti'CG Mousepad",
-    rarity: "Custom / Mousepad",
-    description: "Custom Ti'CG branded mousepad — exclusive design.",
-    image: wa("WhatsApp Image 2026-06-03 at 17.13.11.jpeg"),
-    buyUrl: shopUrl
-  },
   {
     name: "Ti'CG Display Stand",
     rarity: "Custom / Ti'CG",
@@ -273,17 +271,17 @@ const personalizados = [
     buyUrl: shopUrl
   },
   {
-    name: "LED Slab Display Case",
-    rarity: "Custom / Display",
-    description: "RGB LED-lit display case for graded slabs — available with or without card.",
-    image: wa("WhatsApp Image 2026-06-03 at 17.14.31.jpeg"),
-    buyUrl: shopUrl
-  },
-  {
     name: "LED Acrylic Slab Stand",
     rarity: "Custom / Display",
     description: "Illuminated acrylic display stand with wood base — holds 3 graded slabs side by side.",
     image: wa("WhatsApp Image 2026-06-03 at 17.14.31 (1).jpeg"),
+    buyUrl: shopUrl
+  },
+  {
+    name: "LED Slab Display Case",
+    rarity: "Custom / Display",
+    description: "RGB LED-lit display case for graded slabs — available with or without card.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.14.31.jpeg"),
     buyUrl: shopUrl
   }
 ];

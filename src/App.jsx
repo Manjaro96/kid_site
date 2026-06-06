@@ -6,9 +6,9 @@ const GALLERY_PER_PAGE = 8;
 
 const getVisiblePages = (current, total) => {
   const pages = [];
-  if (current > 0) pages.push(current - 1);
-  pages.push(current);
-  if (current < total - 1) pages.push(current + 1);
+  for (let i = Math.max(0, current - 2); i <= Math.min(total - 1, current + 2); i++) {
+    pages.push(i);
+  }
   return pages;
 };
 
@@ -206,9 +206,9 @@ function App() {
                 <button
                   className="button button-secondary"
                   type="button"
-                  onClick={() => window.open(shopUrl, "_blank", "noopener,noreferrer")}
+                  onClick={() => document.getElementById("contact").scrollIntoView({ behavior: "smooth" })}
                 >
-                  ebay store
+                  Full Collection
                 </button>
               </div>
             </div>
@@ -267,7 +267,7 @@ function App() {
           </div>
         </section>
 
-        <section className="cards-section" id="collections">
+        <section className={`cards-section category-${activeCategory}`} id="collections">
           <div className="container">
             <h2 className="section-title center">Featured Cards</h2>
             <div className="category-tabs" role="tablist">
@@ -308,7 +308,7 @@ function App() {
                     onKeyDown={(e) => e.key === "Enter" && setCardModal(card)}
                   >
                     <div className="product-card-img-wrap">
-                      <img src={card.image} alt={card.name} />
+                      <img src={card.image} alt={card.name} className={card.imgClass || ""} />
                       <div className="gallery-zoom-hint" aria-hidden="true">
                         <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0zm0 0v2m0-4v2m-2-2h2m-4 0h2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
                       </div>
@@ -317,24 +317,15 @@ function App() {
                       <h3>{card.name}</h3>
                       <p>{card.description}</p>
                       <div className="product-card-footer">
-                        <span className="pill">{card.rarity}</span>
-                        <a
-                          className="buy-button"
-                          href={card.buyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          Visit
-                        </a>
+                        <div className="card-store-btns">
+                          <a className="buy-button" href="https://www.olx.pt/ads/user/nJ5un/?my_ads=1" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>OLX</a>
+                          <a className="buy-button" href="https://www.vinted.pt/member/161500521?tab=closet" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>Vinted</a>
+                          <a className="buy-button" href="https://pt.wallapop.com/user/murloc-478405165" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>Wallapop</a>
+                        </div>
                       </div>
                     </div>
                   </article>
                 ))}
-              </div>
-              <div className="swipe-hint" aria-hidden="true">
-                <svg viewBox="0 0 24 24" className="swipe-arrow swipe-arrow-left"><path d="M15 18l-6-6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
-                <svg viewBox="0 0 24 24" className="swipe-arrow swipe-arrow-right"><path d="M9 18l6-6-6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
               </div>
             </div>
 
@@ -412,10 +403,6 @@ function App() {
                   );
                 })}
               </div>
-              <div className="swipe-hint" aria-hidden="true">
-                <svg viewBox="0 0 24 24" className="swipe-arrow swipe-arrow-left"><path d="M15 18l-6-6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
-                <svg viewBox="0 0 24 24" className="swipe-arrow swipe-arrow-right"><path d="M9 18l6-6-6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
-              </div>
             </div>
 
             <div className="gallery-pagination" role="navigation" aria-label="Gallery pages">
@@ -468,9 +455,9 @@ function App() {
                 </p>
                 <div className="store-buttons">
                   <a className="store-btn" href={shopUrl} target="_blank" rel="noreferrer">eBay</a>
-                  <a className="store-btn" href={shopUrl} target="_blank" rel="noreferrer">OLX</a>
-                  <a className="store-btn" href={shopUrl} target="_blank" rel="noreferrer">Vinted</a>
-                  <a className="store-btn" href={shopUrl} target="_blank" rel="noreferrer">Wallapop</a>
+                  <a className="store-btn" href="https://www.olx.pt/ads/user/nJ5un/?my_ads=1" target="_blank" rel="noreferrer">OLX</a>
+                  <a className="store-btn" href="https://www.vinted.pt/member/161500521?tab=closet" target="_blank" rel="noreferrer">Vinted</a>
+                  <a className="store-btn" href="https://pt.wallapop.com/user/murloc-478405165" target="_blank" rel="noreferrer">Wallapop</a>
                 </div>
               </div>
               <div className="combined-cta-img">
