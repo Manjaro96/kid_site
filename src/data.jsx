@@ -245,6 +245,13 @@ const mystery = [
 
 const personalizados = [
   {
+    name: "Ti'CG Mousepad",
+    rarity: "Custom / Mousepad",
+    description: "Custom Ti'CG branded mousepad — exclusive design.",
+    image: wa("WhatsApp Image 2026-06-03 at 17.13.11.jpeg"),
+    buyUrl: shopUrl
+  },
+  {
     name: "Ti'CG Display Stand",
     rarity: "Custom / Ti'CG",
     description: "Custom-made branded display stand for booster packs — fits any standard pack.",
@@ -284,8 +291,8 @@ const personalizados = [
 export const cardCategories = [
   { id: "singles",        label: "Singles",       cards: singles       },
   { id: "sealed",         label: "Sealed",         cards: sealed        },
-  { id: "mystery",        label: "Mystery Packs",  cards: mystery       },
-  { id: "personalizados", label: "Custom Items", cards: personalizados }
+  { id: "mystery",        label: "Mystery",        cards: mystery       },
+  { id: "personalizados", label: "Custom",        cards: personalizados }
 ];
 
 export const galleryImages = Array.from(

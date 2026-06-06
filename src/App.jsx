@@ -4,7 +4,16 @@ import { cardCategories, features, galleryImages, shopUrl } from "./data";
 const CARDS_PER_PAGE = 4;
 const GALLERY_PER_PAGE = 8;
 
+const getVisiblePages = (current, total) => {
+  const pages = [];
+  if (current > 0) pages.push(current - 1);
+  pages.push(current);
+  if (current < total - 1) pages.push(current + 1);
+  return pages;
+};
+
 function App() {
+  const isMobile = window.innerWidth <= 780;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showBackHome, setShowBackHome] = useState(false);
   const [activeCategory, setActiveCategory] = useState("singles");
@@ -12,14 +21,19 @@ function App() {
   const [galleryPage, setGalleryPage] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const [cardModal, setCardModal] = useState(null);
+  const [cardsTouchX, setCardsTouchX] = useState(null);
+  const [galleryTouchX, setGalleryTouchX] = useState(null);
   const year = new Date().getFullYear();
   const baseUrl = import.meta.env.BASE_URL;
 
+  const cardsPerPage = isMobile ? 1 : CARDS_PER_PAGE;
+  const galleryPerPage = isMobile ? 1 : GALLERY_PER_PAGE;
+
   const currentCategory = cardCategories.find((c) => c.id === activeCategory);
-  const totalCardsPages = Math.ceil(currentCategory.cards.length / CARDS_PER_PAGE);
+  const totalCardsPages = Math.ceil(currentCategory.cards.length / cardsPerPage);
   const visibleCards = currentCategory.cards.slice(
-    cardsPage * CARDS_PER_PAGE,
-    (cardsPage + 1) * CARDS_PER_PAGE
+    cardsPage * cardsPerPage,
+    (cardsPage + 1) * cardsPerPage
   );
 
   const handleCategoryChange = (id) => {
@@ -27,10 +41,10 @@ function App() {
     setCardsPage(0);
   };
 
-  const totalGalleryPages = Math.ceil(galleryImages.length / GALLERY_PER_PAGE);
+  const totalGalleryPages = Math.ceil(galleryImages.length / galleryPerPage);
   const visibleGallery = galleryImages.slice(
-    galleryPage * GALLERY_PER_PAGE,
-    (galleryPage + 1) * GALLERY_PER_PAGE
+    galleryPage * galleryPerPage,
+    (galleryPage + 1) * galleryPerPage
   );
 
   const closeMenu = () => setIsMenuOpen(false);
@@ -66,6 +80,7 @@ function App() {
 
   useEffect(() => {
     if (cardModal !== null || lightboxIndex !== null) return;
+    if (window.innerWidth <= 780) return;
 
     const sections = Array.from(document.querySelectorAll("main > section:not(.about-section)"));
     let locked = false;
@@ -269,41 +284,58 @@ function App() {
               ))}
             </div>
 
-            <div className="cards-grid">
-              {visibleCards.map((card) => (
-                <article
-                  className="product-card product-card-clickable"
-                  key={card.name}
-                  onClick={() => setCardModal(card)}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`View ${card.name}`}
-                  onKeyDown={(e) => e.key === "Enter" && setCardModal(card)}
-                >
-                  <div className="product-card-img-wrap">
-                    <img src={card.image} alt={card.name} />
-                    <div className="gallery-zoom-hint" aria-hidden="true">
-                      <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0zm0 0v2m0-4v2m-2-2h2m-4 0h2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
+            <div className="swipeable-wrap">
+              <div
+                className="cards-grid"
+                onTouchStart={(e) => setCardsTouchX(e.touches[0].clientX)}
+                onTouchEnd={(e) => {
+                  if (cardsTouchX === null) return;
+                  const dx = cardsTouchX - e.changedTouches[0].clientX;
+                  if (Math.abs(dx) < 40) { setCardsTouchX(null); return; }
+                  if (dx > 0) setCardsPage((p) => Math.min(totalCardsPages - 1, p + 1));
+                  else setCardsPage((p) => Math.max(0, p - 1));
+                  setCardsTouchX(null);
+                }}
+              >
+                {visibleCards.map((card) => (
+                  <article
+                    className="product-card product-card-clickable"
+                    key={card.name}
+                    onClick={() => setCardModal(card)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`View ${card.name}`}
+                    onKeyDown={(e) => e.key === "Enter" && setCardModal(card)}
+                  >
+                    <div className="product-card-img-wrap">
+                      <img src={card.image} alt={card.name} />
+                      <div className="gallery-zoom-hint" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0zm0 0v2m0-4v2m-2-2h2m-4 0h2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
+                      </div>
                     </div>
-                  </div>
-                  <div className="product-card-body">
-                    <h3>{card.name}</h3>
-                    <p>{card.description}</p>
-                    <div className="product-card-footer">
-                      <span className="pill">{card.rarity}</span>
-                      <a
-                        className="buy-button"
-                        href={card.buyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        Visit
-                      </a>
+                    <div className="product-card-body">
+                      <h3>{card.name}</h3>
+                      <p>{card.description}</p>
+                      <div className="product-card-footer">
+                        <span className="pill">{card.rarity}</span>
+                        <a
+                          className="buy-button"
+                          href={card.buyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Visit
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              ))}
+                  </article>
+                ))}
+              </div>
+              <div className="swipe-hint" aria-hidden="true">
+                <svg viewBox="0 0 24 24" className="swipe-arrow swipe-arrow-left"><path d="M15 18l-6-6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
+                <svg viewBox="0 0 24 24" className="swipe-arrow swipe-arrow-right"><path d="M9 18l6-6-6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
+              </div>
             </div>
 
             <div className="gallery-pagination" role="navigation" aria-label="Cards pages">
@@ -316,7 +348,7 @@ function App() {
                 &#8592;
               </button>
 
-              {Array.from({ length: totalCardsPages }, (_, i) => (
+              {(isMobile ? getVisiblePages(cardsPage, totalCardsPages) : Array.from({ length: totalCardsPages }, (_, i) => i)).map((i) => (
                 <button
                   key={i}
                   className={`page-btn ${cardsPage === i ? "active" : ""}`}
@@ -343,30 +375,47 @@ function App() {
         <section className="gallery-section" id="shop">
           <div className="container">
             <h2 className="section-title center">Sets &amp; Collections</h2>
-            <div className="gallery-grid">
-              {visibleGallery.map((image, index) => {
-                const globalIndex = galleryPage * GALLERY_PER_PAGE + index;
-                return (
-                  <article
-                    className="gallery-item gallery-item-clickable"
-                    key={image}
-                    onClick={() => setLightboxIndex(globalIndex)}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`Open image ${globalIndex + 1}`}
-                    onKeyDown={(e) => e.key === "Enter" && setLightboxIndex(globalIndex)}
-                  >
-                    <img
-                      src={image}
-                      alt={`Catalogue page ${globalIndex + 1}`}
-                      loading="lazy"
-                    />
-                    <div className="gallery-zoom-hint" aria-hidden="true">
-                      <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0zm0 0v2m0-4v2m-2-2h2m-4 0h2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
-                    </div>
-                  </article>
-                );
-              })}
+            <div className="swipeable-wrap">
+              <div
+                className="gallery-grid"
+                onTouchStart={(e) => setGalleryTouchX(e.touches[0].clientX)}
+                onTouchEnd={(e) => {
+                  if (galleryTouchX === null) return;
+                  const dx = galleryTouchX - e.changedTouches[0].clientX;
+                  if (Math.abs(dx) < 40) { setGalleryTouchX(null); return; }
+                  if (dx > 0) setGalleryPage((p) => Math.min(totalGalleryPages - 1, p + 1));
+                  else setGalleryPage((p) => Math.max(0, p - 1));
+                  setGalleryTouchX(null);
+                }}
+              >
+                {visibleGallery.map((image, index) => {
+                  const globalIndex = galleryPage * galleryPerPage + index;
+                  return (
+                    <article
+                      className="gallery-item gallery-item-clickable"
+                      key={image}
+                      onClick={() => setLightboxIndex(globalIndex)}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Open image ${globalIndex + 1}`}
+                      onKeyDown={(e) => e.key === "Enter" && setLightboxIndex(globalIndex)}
+                    >
+                      <img
+                        src={image}
+                        alt={`Catalogue page ${globalIndex + 1}`}
+                        loading="lazy"
+                      />
+                      <div className="gallery-zoom-hint" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0zm0 0v2m0-4v2m-2-2h2m-4 0h2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+              <div className="swipe-hint" aria-hidden="true">
+                <svg viewBox="0 0 24 24" className="swipe-arrow swipe-arrow-left"><path d="M15 18l-6-6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
+                <svg viewBox="0 0 24 24" className="swipe-arrow swipe-arrow-right"><path d="M9 18l6-6-6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" stroke="currentColor"/></svg>
+              </div>
             </div>
 
             <div className="gallery-pagination" role="navigation" aria-label="Gallery pages">
@@ -379,7 +428,7 @@ function App() {
                 &#8592;
               </button>
 
-              {Array.from({ length: totalGalleryPages }, (_, i) => (
+              {(isMobile ? getVisiblePages(galleryPage, totalGalleryPages) : Array.from({ length: totalGalleryPages }, (_, i) => i)).map((i) => (
                 <button
                   key={i}
                   className={`page-btn ${galleryPage === i ? "active" : ""}`}

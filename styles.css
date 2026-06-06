@@ -1150,9 +1150,153 @@ h1 span {
   font-size: 1.1rem;
 }
 
+.swipe-hint {
+  display: none;
+}
+
 @media (max-width: 780px) {
-  .cards-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .features-grid,
+  .cards-grid,
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* cards: bigger image, anchored to bottom to show card art */
+  .product-card-img-wrap img {
+    aspect-ratio: auto;
+    height: 48vh;
+    object-position: center bottom;
+  }
+
+  /* gallery: full-screen image */
+  .gallery-item img {
+    height: 65vh;
+  }
+
+  /* prevent vertical scroll hijack when swiping left/right */
+  .cards-grid,
+  .gallery-grid {
+    touch-action: pan-y;
+  }
+
+  /* category tabs: 4 in one row, allow text to wrap within each tab */
+  .category-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .category-tab {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    padding: 8px 4px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  /* swipe hint: arrows float on the sides of the card/image */
+  .swipeable-wrap {
+    position: relative;
+  }
+
+  .swipe-hint {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 35%;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    pointer-events: none;
+    padding: 0 8px;
+  }
+
+  .swipe-arrow {
+    width: 32px;
+    height: 32px;
+    color: var(--white);
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 50%;
+    padding: 6px;
+    box-sizing: content-box;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .swipe-arrow-left {
+    animation: swipeLeft 1.6s ease-in-out infinite;
+  }
+
+  .swipe-arrow-right {
+    animation: swipeRight 1.6s ease-in-out infinite;
+  }
+
+  /* center all text except hero on mobile */
+  .about-copy,
+  .about-text,
+  .cards-section .container,
+  .gallery-section .container,
+  .combined-cta-copy {
+    text-align: center;
+  }
+
+  .combined-cta-copy {
+    align-items: center;
+  }
+
+  /* tighter section padding on mobile */
+  .cards-section,
+  .gallery-section {
+    padding: 24px 0;
+  }
+
+  .cards-section .section-title,
+  .gallery-section .section-title {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+  }
+
+  .gallery-pagination {
+    margin-top: 16px;
+  }
+
+  /* contact: store buttons 2x2 grid */
+  .store-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .store-btn {
+    padding: 12px 8px;
+    font-size: 0.88rem;
+    text-align: center;
+    border-radius: 14px;
+  }
+
+  .combined-cta {
+    gap: 20px;
+  }
+
+  .combined-cta-img img {
+    height: 160px;
+  }
+
+  .combined-contact {
+    padding: 16px 0 0;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 10px;
+    margin-top: 16px;
+    justify-content: center;
   }
 
   .page-btn {
@@ -1431,14 +1575,35 @@ h1 span {
   }
 
   .card-modal-img-wrap {
-    min-height: 260px;
-    max-height: 340px;
+    height: 56vh;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .card-modal-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
   }
 
   .card-modal-body {
     text-align: center;
     align-items: center;
-    padding: 24px;
+    padding: 18px 20px;
+    gap: 10px;
+  }
+
+  .card-modal-body .eyebrow {
+    font-size: 0.7rem;
+  }
+
+  .card-modal-title {
+    font-size: 1.4rem;
+  }
+
+  .card-modal-desc {
+    font-size: 0.88rem;
   }
 
   .card-modal-buy {
@@ -1478,6 +1643,16 @@ h1 span {
   transform: scale(1);
 }
 
+@keyframes swipeLeft {
+  0%, 100% { transform: translateX(0); opacity: 0.4; }
+  50% { transform: translateX(-5px); opacity: 0.9; }
+}
+
+@keyframes swipeRight {
+  0%, 100% { transform: translateX(0); opacity: 0.4; }
+  50% { transform: translateX(5px); opacity: 0.9; }
+}
+
 /* Category tabs */
 .category-tabs {
   display: flex;
@@ -1514,11 +1689,6 @@ h1 span {
 }
 
 @media (max-width: 520px) {
-  .category-tabs {
-    gap: 8px;
-    margin-bottom: 24px;
-  }
-
   .category-tab {
     padding: 8px 16px;
     font-size: 0.82rem;
