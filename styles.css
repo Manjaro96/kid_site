@@ -1166,6 +1166,10 @@ h1 span {
     overscroll-behavior-y: none;
   }
 
+  .hero-section {
+    padding-top: 32px;
+  }
+
   .features-grid,
   .cards-grid,
   .gallery-grid {
