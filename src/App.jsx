@@ -523,14 +523,11 @@ function App() {
               <p className="eyebrow">{cardModal.rarity}</p>
               <h2 className="card-modal-title">{cardModal.name}</h2>
               <p className="card-modal-desc">{cardModal.description}</p>
-              <a
-                className="button button-primary card-modal-buy"
-                href={cardModal.buyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Visit
-              </a>
+              <div className="card-store-btns card-modal-buy">
+                <a className="buy-button" href="https://www.olx.pt/ads/user/nJ5un/?my_ads=1" target="_blank" rel="noopener noreferrer">OLX</a>
+                <a className="buy-button" href="https://www.vinted.pt/member/161500521?tab=closet" target="_blank" rel="noopener noreferrer">Vinted</a>
+                <a className="buy-button" href="https://pt.wallapop.com/user/murloc-478405165" target="_blank" rel="noopener noreferrer">Wallapop</a>
+              </div>
             </div>
           </div>
         </div>
